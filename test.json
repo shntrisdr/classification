@@ -1,1 +1,133 @@
-[{"title": "Chat 1", "messages": [{"role": "user", "content": "Hello A"}], "id": "1"}, {"title": "Chat 2", "messages": [{"role": "user", "content": "Hello B"}], "id": "2"}, {"title": "Chat 3", "messages": [{"role": "user", "content": "Hello Skip"}], "id": "3"}]
+[
+    {
+    "conversation_id": "04223d17-d22f-45f9-89a7-5cc83077d0f0",
+    "conversation_template_id": null,
+    "create_time": 1721863669.870876,
+    "current_node": "eb2450d8-52f9-47dd-b722-4dc9581bd980",
+    "default_model_slug": "auto",
+    "id": "04223d17-d22f-45f9-89a7-5cc83077d0f0",
+    "is_archived": false,
+    "is_do_not_remember": null,
+    "is_read_only": null,
+    "is_starred": null,
+    "is_study_mode": false,
+    "mapping": {
+        "0249eba1-2492-4487-8b5e-4497b0c79af7": {
+        "id": "0249eba1-2492-4487-8b5e-4497b0c79af7",
+        "message": {
+            "author": {
+            "name": null,
+            "role": "user"
+            },
+            "content": {
+            "content_type": "text",
+            "parts": [
+                "アーティスト名と曲名からapple musicのプレイリストに曲を追加するpythonコードを書いて"
+            ]
+            },
+            "create_time": 1721863669.874811,
+            "id": "0249eba1-2492-4487-8b5e-4497b0c79af7"
+        },
+        "parent": "31deef40-4014-42af-89b2-4bd0df3955c0"
+        },
+        "31deef40-4014-42af-89b2-4bd0df3955c0": {
+        "id": "31deef40-4014-42af-89b2-4bd0df3955c0",
+        "message": null,
+        "parent": null
+        },
+        "eb2450d8-52f9-47dd-b722-4dc9581bd980": {
+        "id": "eb2450d8-52f9-47dd-b722-4dc9581bd980",
+        "message": {
+            "author": {
+            "name": null,
+            "role": "assistant"
+            },
+            "content": {
+            "content_type": "text",
+            "parts": [
+                "Apple MusicのAPIを使ってプレイリストに曲を追加するには、Apple Developerアカウントが必要です。また、以下の手順を行う必要があります：\n\n1. Apple Music API用のキーを取得\n2. 認証トークンを生成\n3. APIエンドポイントにリクエストを送信\n\n以下に、Apple Music APIを使ってプレイリストに曲を追加するPythonコードの例を示します。なお、このコードは実際のAPIキーやプレイリストID、トークンなどを取得して設定する必要があります。\n\n```python\nimport jwt\nimport time\nimport requests\n\n# Apple Music APIのキーと設定\ndeveloper_team_id = 'YOUR_DEVELOPER_TEAM_ID'\nkey_id = 'YOUR_KEY_ID'\nprivate_key = \"\"\"\n-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY\n-----END PRIVATE KEY-----\n\"\"\"\n\n# JWTの生成\nheader = {\n    \"alg\": \"ES256\",\n    \"kid\": key_id\n}\n\npayload = {\n    \"iss\": developer_team_id,\n    \"iat\": int(time.time()),\n    \"exp\": int(time.time()) + 86400 * 180,\n    \"aud\": \"music\"\n}\n\ntoken = jwt.encode(payload, private_key, algorithm='ES256', headers=header)\n\n# 曲の検索\ndef search_song(artist_name, song_name, token):\n    url = f\"https://api.music.apple.com/v1/catalog/us/search\"\n    headers = {\n        \"Authorization\": f\"Bearer {token}\"\n    }\n    params = {\n        \"term\": f\"{artist_name} {song_name}\",\n        \"types\": \"songs\",\n        \"limit\": 1\n    }\n    response = requests.get(url, headers=headers, params=params)\n    data = response.json()\n    return data['results']['songs']['data'][0]['id'] if data['results']['songs']['data'] else None\n\n# プレイリストに曲を追加\ndef add_song_to_playlist(playlist_id, song_id, token):\n    url = f\"https://api.music.apple.com/v1/me/library/playlists/{playlist_id}/tracks\"\n    headers = {\n        \"Authorization\": f\"Bearer {token}\",\n        \"Music-User-Token\": \"YOUR_MUSIC_USER_TOKEN\"\n    }\n    payload = {\n        \"data\": [\n            {\n                \"id\": song_id,\n                \"type\": \"songs\"\n            }\n        ]\n    }\n    response = requests.post(url, json=payload, headers=headers)\n    return response.json()\n\n# 使用例\nartist_name = \"Taylor Swift\"\nsong_name = \"Love Story\"\nplaylist_id = \"YOUR_PLAYLIST_ID\"\n\nsong_id = search_song(artist_name, song_name, token)\nif song_id:\n    result = add_song_to_playlist(playlist_id, song_id, token)\n    print(result)\nelse:\n    print(\"Song not found\")\n```\n\nこのコードでは、最初にアーティスト名と曲名から曲を検索し、見つかった曲IDを指定のプレイリストに追加します。適切なAPIキーやトークンを取得して設定する必要があります。"
+            ]
+            },
+            "create_time": 1721863684.922952,
+            "id": "eb2450d8-52f9-47dd-b722-4dc9581bd980",
+            "metadata": {
+            "model_slug": "gpt-4o",
+            "parent_id": "e023bebe-6f60-449b-9787-f4c08046445d"
+            }
+        },
+        "parent": "0249eba1-2492-4487-8b5e-4497b0c79af7"
+        }
+    },
+    "memory_scope": "global_enabled",
+    "pinned_time": null,
+    "plugin_ids": null,
+    "title": "Apple Music Playlist Update",
+    "update_time": 1721863685.805054,
+    "voice": null
+    },
+    {
+    "conversation_id": "06ac0e7d-585c-4a93-afd3-c82d2ea622be",
+    "conversation_template_id": null,
+    "create_time": 1682562682.641558,
+    "current_node": "04c2c907-dd4d-4368-86f1-f9c796712649",
+    "default_model_slug": null,
+    "id": "06ac0e7d-585c-4a93-afd3-c82d2ea622be",
+    "is_archived": false,
+    "is_do_not_remember": null,
+    "is_read_only": null,
+    "is_starred": null,
+    "is_study_mode": false,
+    "mapping": {
+        "04c2c907-dd4d-4368-86f1-f9c796712649": {
+        "id": "04c2c907-dd4d-4368-86f1-f9c796712649",
+        "message": {
+            "author": {
+            "name": null,
+            "role": "assistant"
+            },
+            "content": {
+            "content_type": "text",
+            "parts": [
+                "カトリック教会とプロテスタント教会は、いくつかの重要な違いがあります。\n\n1. 教会の権威：カトリック教会は、教皇を中心とした中央集権的な教会組織を持っています。一方、プロテスタント教会は、各教会が独自の権威を持ち、地域的な教会協力体制を持っています。\n\n2. 聖書解釈：カトリック教会は、聖書解釈において聖書と伝統を同じく重要視します。プロテスタント教会は、聖書のみを最高の権威としているため、伝統に比べて聖書の解釈に自由度があります。\n\n3. 神学的重要性：カトリック教会は、聖体の崇拝、聖母マリア崇拝、聖人崇拝などの神学的信念を重視しています。一方、プロテスタント教会は、聖書に基づく信仰の重要性に重点を置いています。\n\n4. 儀式：カトリック教会は、実践的な儀式や祭儀に重点を置いています。一方、プロテスタント教会は、儀式よりも教会礼拝の中での音楽や説教に重点を置いています。\n\n5. 結婚・性的指向：カトリック教会は、結婚は男性と女性の結びつきであり、同性愛行為は罪悪であると考えています。プロテスタント教会は、結婚は男性と女性の結びつきであると考える場合が多いですが、同性愛に対する見解は教派によって異なります。\n\n以上の違いは、カトリック教会とプロテスタント教会の信仰と実践の根本的な違いを反映しています。ただし、それぞれの教派や個人の信仰や実践には、さまざまな変化や多様性があることに注意する必要があります。"
+            ]
+            },
+            "create_time": 1682562731.605066,
+            "id": "04c2c907-dd4d-4368-86f1-f9c796712649",
+            "metadata": {
+            "model_slug": "text-davinci-002-render-sha"
+            }
+        },
+        "parent": "c2452c5e-d409-42e9-8543-6ba988ea1b2d"
+        },
+        "917b437f-a56f-4969-8894-f46978ecafe7": {
+        "id": "917b437f-a56f-4969-8894-f46978ecafe7",
+        "message": null,
+        "parent": null
+        },
+        "c2452c5e-d409-42e9-8543-6ba988ea1b2d": {
+        "id": "c2452c5e-d409-42e9-8543-6ba988ea1b2d",
+        "message": {
+            "author": {
+            "name": null,
+            "role": "user"
+            },
+            "content": {
+            "content_type": "text",
+            "parts": [
+                "カトリックとプロテスタントの違いを教えて"
+            ]
+            },
+            "create_time": 1682562682.645711,
+            "id": "c2452c5e-d409-42e9-8543-6ba988ea1b2d"
+        },
+        "parent": "917b437f-a56f-4969-8894-f46978ecafe7"
+        }
+    },
+    "memory_scope": "global_enabled",
+    "pinned_time": null,
+    "plugin_ids": null,
+    "title": "カトリックvsプロテスタント",
+    "update_time": 1682562731.0,
+    "voice": null
+    }
+]
